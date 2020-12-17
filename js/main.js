@@ -1,9 +1,6 @@
-//alert("probando");
-
-//Si clickeo generate y no pongo nada en el input, se añado un paragraph random cada vez
-//Si pongo el número de paragraph, se añade los paragraph depende del número que pongamos
 
 // ============ VARIABLES ===============
+
 const text = [
     `Jelly sweet roll jelly beans biscuit pie macaroon chocolate donut. Carrot cake caramels pie sweet apple pie tiramisu carrot cake. Marzipan marshmallow croissant tootsie roll lollipop. Cupcake lemon drops bear claw gummies. Jelly bear claw gummi bears lollipop cotton candy gummi bears chocolate bar cake cookie. Cupcake muffin danish muffin cookie gummies. Jelly beans tiramisu pudding. Toffee soufflé chocolate cake pastry brownie. Oat cake halvah sweet roll cotton candy croissant lollipop. Macaroon tiramisu chocolate bar candy candy carrot cake jelly sweet. Gummies croissant macaroon dessert. Chocolate cake dragée pie.`,
     `Next level tbh everyday carry, blog copper mug forage kitsch roof party pickled hammock kale chips tofu. Etsy shoreditch 8-bit microdosing, XOXO viral butcher banh mi humblebrag listicle woke bicycle rights brunch before they sold out ramps. Twee shabby chic taiyaki flannel, enamel pin venmo vape four loko. Hexagon kale chips typewriter kitsch 8-bit organic plaid small batch keffiyeh ethical banh mi narwhal echo park cronut.`,
@@ -15,13 +12,14 @@ const text = [
     `Salvia glossier subway tile, leggings mustache YOLO semiotics chia. Pitchfork tbh af blog church-key meggings vaporware PBR&B master cleanse post-ironic man bun pabst mustache letterpress synth. Snackwave raw denim godard, 3 wolf moon shaman offal kitsch unicorn live-edge selvage schlitz fashion axe vaporware drinking vinegar prism. Shabby chic tacos artisan, chambray chicharrones cardigan leggings typewriter af pop-up williamsburg meditation PBR&B viral. You probably haven't heard of them DIY jean shorts subway tile fashion axe bushwick kitsch tumeric cloud bread vaporware freegan franzen pork belly chicharrones banh mi.`,
     `Man braid celiac synth freegan readymade, pitchfork fam salvia waistcoat lomo bitters gentrify four loko. Pitchfork semiotics post-ironic vegan. Tofu meditation microdosing hashtag semiotics venmo. Flexitarian vape tilde taiyaki. Prism poutine farm-to-table, messenger bag vegan taxidermy tattooed sartorial squid jean shorts fixie selvage trust fund vape.`,
     `Rutters Plate Fleet boom chandler Brethren of the Coast handsomely lookout marooned brigantine knave. Buccaneer gangway jack rum loot spyglass line Jack Tar fore gaff. Gaff topmast scuttle ballast swab draught measured fer yer chains dance the hempen jig Chain Shot yardarm.`,
-  ];
+];
 
 const btn = document.querySelector(".btn");
 const loremText = document.querySelector(".lorem-text");
 const loremForm = document.querySelector(".lorem-form");
 const amount = document.getElementById("amount");
-//console.log(loremForm);
+
+
 
 
 //Cuando le damos a generate(submit)
@@ -30,41 +28,90 @@ loremForm.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
+    loremText.innerHTML = "";
+
     detectarTecla();
 
-    //console.log(`Hemos dado click al botón submit`);
+   
 })
+
+
+
+
 
 
 
 //Función que obtiene el valor del input del número que ponemos
 
-function detectarTecla(){
+function detectarTecla() {
 
     let keyName = amount.value;
 
-    if(keyName < 0){
+    //menos de 0
+
+    if (keyName <= 0 || keyName > 9)  {
+
+        loremText.innerHTML = `<p class="stop">The paragraphs must be between 1 and 9 (both inclusive)`;
         amount.value = 0;
-    } else if(keyName === ""){
+
+    }
+    
+    // input vacío
+    
+    else if (keyName === "") {
+
         randomdelorem();
-    } else{
-        loremText.innerHTML = text[keyName];
+        
+
+    }
+    
+    // input mayor que 0
+
+    else if (keyName > 0) {
+
+        escribirLorem();
     }
 
-    //console.log(keyName);
-    return keyName;
+ 
 
 }
 
 
-// Función general lorem ipsum al azar
+// Función generar 1 parrafo lorem ipsum al azar
 
-function randomdelorem(){
+function randomdelorem() {
 
-    const randomNumber = Math.round(Math.random() * text.length);
+    const randomNumber = Math.round(Math.random() * (text.length - 1));
+
 
     loremText.innerHTML = text[randomNumber]
 
 }
 
-//console.log(text.length);
+
+// Función generar el número de parrafos lorem dependiendo de lo que hay escrito la persona
+
+function escribirLorem() {
+
+    let keyName = parseInt(amount.value);
+    //console.log(typeof keyName);
+
+    for (let i = 0; i < text.length; i++) {
+
+        if (i === keyName) {
+            break;
+        } else {
+            loremText.innerHTML += `${text[i]}<br><br>
+            `;
+        }
+
+
+    }
+
+
+
+
+}
+
+
+
